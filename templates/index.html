@@ -34,7 +34,40 @@
                 {% endif %}
                 {% endwith %}
 
+                <div class="btn-toolbar mb">
+                    <div class="btn-group mr-1">
+<!--                        <a href="/" class="btn btn-sm btn-outline-secondary" role="button">Reset filter</a>-->
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#filtr_date">Filter Date</button>
+                    </div>
+                    <div class="btn-group mr-1">
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/filter/1">ToDay</a>
+                        <a class="dropdown-item" href="/filter/2">Last Week</a>
+                        <a class="dropdown-item" href="/filter/3">Last Month</a>
+                        </div>
+                    </div>
+
+                    <form action="{{url_for('filter_title')}}" method="POST">
+
+                        <div class="input-group">
+
+                            <input type="text" class="form-control" placeholder="Input Title Events" aria-label="Input Title" aria-describedby="button-addon2" name="title">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+
                 <table class="table table-hover table-dark">
+
                     <tr>
                         <th>ID</th>
                         <th>Date</th>
@@ -43,19 +76,24 @@
                         <th>Event content</th>
                     </tr>
 
-                    {% for row in events %}
+                    <tbody id="myTable">
 
-                    <tr>
-                        <td>{{row.id}}</td>
-                        <td>{{row.date}}</td>
-                        <td>{{row.time}}</td>
-                        <td>{{row.title}}</td>
-                        <td>{{row.event_content}}</td>
-                        <td>
-                            <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
-                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete ?')">Delete</a>
-                        </td>
-                    </tr>
+                        {% for row in events %}
+
+                        <tr>
+                            <td onclick="window.location.href='/events/{{row.id}}'; return false" id="click_row">{{row.id}}</td>
+                            <td onclick="window.location.href='/events/{{row.id}}'; return false" id="click_row">{{row.date}}</td>
+                            <td onclick="window.location.href='/events/{{row.id}}'; return false" id="click_row">{{row.time}}</td>
+                            <td onclick="window.location.href='/events/{{row.id}}'; return false" id="click_row">{{row.title}}</td>
+                            <td onclick="window.location.href='/events/{{row.id}}'; return false" id="click_row">{{row.event_content}}</td>
+
+
+                            <td>
+                                <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}" id="button_update">Edit</a>
+                                <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete ?')" id="button_delate">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
                     <!-- Modal Edit-->
                     <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
@@ -130,6 +168,41 @@
                             <div class="from-group">
 
                                 <button class="btn btn-primary" type="submit">Add new event</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+         <!-- Filter Date-->
+         <div id="filtr_date" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Filter Date</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url_for('filter_date')}}" method="POST">
+                            <div class="from-group">
+                                <label>Date Start:</label>
+                                <input type="date" class="from-control" name="date_start" required="1">
+                            </div>
+
+                            <div class="from-group">
+                                <label>Date End:</label>
+                                <input type="date" class="from-control" name="date_end" required="1">
+                            </div>
+
+
+                            <div class="from-group">
+
+                                <button class="btn btn-primary" type="submit">click</button>
                             </div>
                         </form>
                     </div>
