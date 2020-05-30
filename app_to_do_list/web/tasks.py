@@ -1,5 +1,3 @@
-# from __future__ import absolute_import, unicode_literals
-
 from flask_mail import Message
 from settings import mail, app, celery
 

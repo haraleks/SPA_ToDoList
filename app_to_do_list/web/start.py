@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user
 from models import User, Events
-from tasks import send_async_email
 from settings import app, manager, db
+from tasks import send_async_email
 from werkzeug.security import generate_password_hash, check_password_hash
 
 dt_start = "2000-01-01"
@@ -110,10 +110,7 @@ def insert():
         date_time = date + " " + time
         datetime_object = datetime.strptime(date_time, '%Y-%m-%d %H:%M') - timedelta(hours=4)
         eta_date = datetime.utcfromtimestamp(datetime_object.timestamp()).strftime('%Y-%m-%d %H:%M:%S')
-
         send_async_email.apply_async(args=[email_data], eta=eta_date)
-
-        # celery.send_task('celery.tasks.send_async_email', args=[email_data], eta=eta_date)
 
         flash('New event inserted successfully')
 

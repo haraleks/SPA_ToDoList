@@ -8,8 +8,6 @@ ENV CELERY_RESULT_BACKEND amqp://haraleks:123456@localhost:5672/vhost
 
 ENV MAIL_SERVER smtp.yandex.ru
 ENV MAIL_PORT 465
-ENV MAIL_USE_TLS False
-ENV MAIL_USE_SSL True
 ENV MAIL_USERNAME flask.crud@yandex.ru
 ENV MAIL_DEFAULT_SENDER flask.crud@yandex.ru
 ENV MAIL_PASSWORD Crud2020
