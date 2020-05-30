@@ -2,15 +2,15 @@ FROM python:3.7.7-slim-buster
 
 WORKDIR /web
 
-ENV SQLALCHEMY_DATABASE_URI mysql+pymysql://test1:Test1_2020@localhost/crud
-ENV CELERY_BROKER_URL amqp://haraleks:123456@localhost:5672/vhost
-ENV CELERY_RESULT_BACKEND amqp://haraleks:123456@localhost:5672/vhost
+ENV SQLALCHEMY_DATABASE_URI mysql+pymysql://
+ENV CELERY_BROKER_URL amqp://
+ENV CELERY_RESULT_BACKEND amqp://
 
 ENV MAIL_SERVER smtp.yandex.ru
 ENV MAIL_PORT 465
-ENV MAIL_USERNAME flask.crud@yandex.ru
-ENV MAIL_DEFAULT_SENDER flask.crud@yandex.ru
-ENV MAIL_PASSWORD Crud2020
+ENV MAIL_USERNAME ''
+ENV MAIL_DEFAULT_SENDER ''
+ENV MAIL_PASSWORD ''
 
 EXPOSE 5000
 EXPOSE 3306 33060

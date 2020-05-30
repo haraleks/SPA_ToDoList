@@ -1,3 +1,9 @@
 /venv
 package-lock.json
 /.idea
+/run_celery/.
+/docker/
+/.app/
+app_to_do_list/proj
+app_to_do_list/web/proj
+
