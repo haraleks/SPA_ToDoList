@@ -1,0 +1,84 @@
+version: "3.8"
+services:
+#  rabbitmq:
+#    restart: always
+#    image: rabbitmq
+#    command: rabbitmq-server
+#    environment:
+#      RABBITMQ_DEFAULT_USER: haraleks
+#      RABBITMQ_DEFAULT_PASS: 123456
+#    expose:
+#      - 5672
+#      - 15672
+##    ports:
+##      - "5672:5672"
+###      - "15672:15672"
+#    healthcheck:
+#      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+#      interval: 5s
+#      timeout: 15s
+#      retries: 1
+#    networks:
+#      - backend
+
+#  mysql:
+#    restart: always
+#    image: mysql:5.7.30
+#    expose:
+#      - 3306
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=crud
+#      - MYSQL_USER=test1
+#      - MYSQL_PASSWORD=Test1_2020
+##    networks:
+#      - backend
+
+  web:
+    container_name: web
+    build:
+      context: app_to_do_list/
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: host
+    ports:
+     - "5000:5000"
+    depends_on:
+#      - rabbitmq
+#      - mysql
+      - celery
+    volumes:
+#       - .:/web
+      - ./app_to_do_list/web:/web
+#      - ./run_celery/app/proj:/web/proj
+    environment:
+      DATABASE_HOST: mysql
+      POSTGRES_USER: test1
+      POSTGRES_PASSWORD: Test1_2020
+      POSTGRES_DB: crud
+#    networks:
+#      - backend
+
+  celery:
+      container_name: celery
+      build:
+        context: app_to_do_list/.
+        dockerfile: Dockerfile
+      command: celery -A settings.celery worker --loglevel=DEBUG
+      volumes:
+#         - .:/web
+         - ./app_to_do_list/web:/web
+#        - ./run_celery/app:/app
+      network_mode: host
+  #    expose:
+  #          - 5672
+  #    links:
+  #      - rabbitmq
+  #    depends_on:
+  #      - rabbitmq
+  #    networks:
+  #      - backend
+
+#networks:
+#  backend:
+#    name: backend
