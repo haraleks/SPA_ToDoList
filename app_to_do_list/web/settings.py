@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from fun_celery import make_celery
 
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'a really really really really long secret key'

@@ -12,12 +12,10 @@ ENV MAIL_USERNAME flask.crud@yandex.ru
 ENV MAIL_DEFAULT_SENDER flask.crud@yandex.ru
 ENV MAIL_PASSWORD Crud2020
 
-
 EXPOSE 5000
 EXPOSE 3306 33060
 
 COPY . .
-
 
 RUN pip install -r requirements.txt
 RUN ls

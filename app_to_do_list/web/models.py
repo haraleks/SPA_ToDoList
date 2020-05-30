@@ -2,11 +2,10 @@ from datetime import datetime
 
 from flask_login import UserMixin
 from flask_wtf import FlaskForm
+from settings import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-
-from settings import db
 
 
 class User(db.Model, UserMixin):
@@ -17,7 +16,6 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(100), nullable=False)
     created_on = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_on = db.Column(db.DateTime(), default=datetime.utcnow,  onupdate=datetime.utcnow)
-
     events = db.relationship('Events', backref='author')
 
     def __repr__(self):
@@ -39,19 +37,13 @@ class Events(db.Model):
     event_content = db.Column(db.Text(), nullable=False)
     created_on = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
-
     user_email = db.Column(db.Integer(), db.ForeignKey('users.email'))
-
-
 
     def __init__(self, date, time, title, event_content):
         self.date = date
         self.time = time
         self.title = title
         self.event_content = event_content
-
-    def start(self):
-        pass
 
 
 class LoginForm(FlaskForm):

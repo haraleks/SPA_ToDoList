@@ -8,6 +8,7 @@ from settings import app, manager, db
 from tasks import send_async_email
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 dt_start = "2000-01-01"
 dt_end = "2050-01-01"
 user = ''
